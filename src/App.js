@@ -11,6 +11,11 @@ function App() {
         email="jdoe@gmail.com"
         phone="+6697-333-6569"
       />
+
+      <Contact name="Karen Smith"
+        email="smith@gmail.com"
+        phone="+6697-333-5678"
+      />
     </div>
   );
 }
