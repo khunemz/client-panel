@@ -1,9 +1,21 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 
-export default function Header(props) {
+const Header = (props) => {
+    const {branding} = props;
     return (
         <div>
-            <h2>{props.branding}</h2>
+            <h2>{branding}</h2>
         </div>
     )
 }
+
+Header.defaulProps = {
+    branding: "Contact Manager"
+}
+
+Header.propTypes = {
+    branding: PropTypes.string.isRequired
+}
+
+export default Header;
