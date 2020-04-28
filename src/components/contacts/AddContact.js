@@ -8,13 +8,35 @@ class AddContact extends Component {
     name: "",
     email: "",
     phone: "",
+    errors: {
+        
+    }
   };
 
   onFormSubmit = (dispatch , e) => {
     e.preventDefault();
     const { name , email , phone} = this.state;
+
+    if (name == '') {
+        this.setState({errors: {name: 'Name is required.'}})
+        return;
+    }
+
+    if (email == '') {
+        this.setState({errors: {email: 'Email is required.'}})
+        return;
+    }
+
+    if (phone == '') {
+        this.setState({errors: {phone: 'Phone is required.'}})
+        return;
+    }
+
     const newContact = {
-        id: uuid() , name , email , phone 
+        id: uuid() , 
+        name , 
+        email , 
+        phone 
     };
 
     dispatch({
@@ -24,7 +46,12 @@ class AddContact extends Component {
 
     // empty: input
     this.setState({
-        name: '' , email: '' , phone: ''
+        name: '' , 
+        email: '' , 
+        phone: '' , 
+        errors: {
+
+        }
     })
   };
 
@@ -33,7 +60,7 @@ class AddContact extends Component {
   };
 
   render() {
-    const { name, email, phone } = this.state;
+    const { name, email, phone , errors } = this.state;
     return (
       <Consumer>
         {(value) => {
@@ -50,8 +77,8 @@ class AddContact extends Component {
                     name="name"
                     placeholder="Enter name ..."  
                     value={name} 
-                    required="true"
                     onChange={this.onChange}
+                    error={errors.name}
                 />
                 <TextInputGroup 
                     label="Email"
@@ -59,16 +86,16 @@ class AddContact extends Component {
                     type="email"
                     placeholder="Enter Email ..." 
                     value={email} 
-                    required="true"
                     onChange={this.onChange}
+                    error={errors.email}
                 />
                 <TextInputGroup 
                     label="Phone"
                     name="phone"
                     placeholder="Enter phone ..." 
                     value={phone} 
-                    required="true"
                     onChange={this.onChange}
+                    error={errors.phone}
                 />
                   <input
                     type="submit"
