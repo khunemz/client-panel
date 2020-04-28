@@ -1,9 +1,10 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Contacts from './components/Contacts';
-import Header from './components/Header';
+import Contacts from './components/contacts/Contacts';
+import Header from './components/layout/Header';
 import {Provider} from './context'
+import AddContact from './components/contacts/AddContact';
 
 
 function App() {
@@ -11,8 +12,9 @@ function App() {
    <Provider>
       <div className="App">
       <Header branding="Contact manager" />
-      
+     
       <div className="container">
+        <AddContact />
         <Contacts />
       </div>
     </div>
