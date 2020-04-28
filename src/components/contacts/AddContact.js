@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Consumer } from "./../../context";
+import TextInputGroup from './../layout/TextInputGroup'
 import {v1 as uuid} from 'uuid'
 
 class AddContact extends Component {
@@ -15,10 +16,16 @@ class AddContact extends Component {
     const newContact = {
         id: uuid() , name , email , phone 
     };
-debugger;
-    dispatch({type: 'ADD_CONTACT' , 
+
+    dispatch({
+        type: 'ADD_CONTACT' , 
         payload: newContact    
     });
+
+    // empty: input
+    this.setState({
+        name: '' , email: '' , phone: ''
+    })
   };
 
   onChange = (e) => {
@@ -35,41 +42,34 @@ debugger;
             <div className="card mb-3">
               <div className="card-header">Add contact</div>
               <div className="card-body">
+
+                
                 <form onSubmit={this.onFormSubmit.bind(this , dispatch)}>
-                  <div className="form-group">
-                    <label htmlFor="name">Name</label>
-                    <input
-                      name="name"
-                      className="form-control form-control-lg"
-                      placeholder="Enter name ..."
-                      value={name}
-                      onChange={this.onChange}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <input
-                      name="email"
-                      type="email"
-                      className="form-control form-control-lg"
-                      placeholder="Enter email ..."
-                      value={email}
-                      onChange={this.onChange}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="phone">Phone</label>
-                    <input
-                      name="phone"
-                      type="phone"
-                      className="form-control form-control-lg"
-                      placeholder="Enter Phone ..."
-                      value={phone}
-                      onChange={this.onChange}
-                    />
-                  </div>
+                <TextInputGroup 
+                    label="Name"
+                    name="name"
+                    placeholder="Enter name ..."  
+                    value={name} 
+                    required="true"
+                    onChange={this.onChange}
+                />
+                <TextInputGroup 
+                    label="Email"
+                    name="email"
+                    type="email"
+                    placeholder="Enter Email ..." 
+                    value={email} 
+                    required="true"
+                    onChange={this.onChange}
+                />
+                <TextInputGroup 
+                    label="Phone"
+                    name="phone"
+                    placeholder="Enter phone ..." 
+                    value={phone} 
+                    required="true"
+                    onChange={this.onChange}
+                />
                   <input
                     type="submit"
                     value="Add Contact"
