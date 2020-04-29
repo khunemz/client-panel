@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Consumer } from "./../../context";
 import TextInputGroup from './../layout/TextInputGroup'
 import {v1 as uuid} from 'uuid'
+import axios from 'axios';
 
 class AddContact extends Component {
   state = {
@@ -33,15 +34,19 @@ class AddContact extends Component {
     }
 
     const newContact = {
-        id: uuid() , 
+
         name , 
         email , 
         phone 
     };
 
-    dispatch({
+    axios.post(`https://jsonplaceholder.typicode.com/users` , newContact)
+    .then(res => {
+      // dispatch after doing stuff
+      dispatch({
         type: 'ADD_CONTACT' , 
-        payload: newContact    
+        payload: res.data
+      });
     });
 
     // empty: input
