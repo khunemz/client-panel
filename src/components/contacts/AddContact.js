@@ -52,7 +52,10 @@ class AddContact extends Component {
         errors: {
 
         }
-    })
+    });
+
+    // redirect to home page
+    this.props.history.push('/');
   };
 
   onChange = (e) => {
