@@ -1,66 +1,62 @@
 import React, { Component } from "react";
 import { Consumer } from "./../../context";
-import TextInputGroup from './../layout/TextInputGroup'
-import {v1 as uuid} from 'uuid'
-import axios from 'axios';
+import TextInputGroup from "./../layout/TextInputGroup";
+import { v1 as uuid } from "uuid";
+import axios from "axios";
 
 class AddContact extends Component {
   state = {
     name: "",
     email: "",
     phone: "",
-    errors: {
-        
-    }
+    errors: {},
   };
 
-  onFormSubmit = (dispatch , e) => {
+  onFormSubmit = (dispatch, e) => {
     e.preventDefault();
-    const { name , email , phone} = this.state;
+    const { name, email, phone } = this.state;
 
-    if (name == '') {
-        this.setState({errors: {name: 'Name is required.'}})
-        return;
+    if (name == "") {
+      this.setState({ errors: { name: "Name is required." } });
+      return;
     }
 
-    if (email == '') {
-        this.setState({errors: {email: 'Email is required.'}})
-        return;
+    if (email == "") {
+      this.setState({ errors: { email: "Email is required." } });
+      return;
     }
 
-    if (phone == '') {
-        this.setState({errors: {phone: 'Phone is required.'}})
-        return;
+    if (phone == "") {
+      this.setState({ errors: { phone: "Phone is required." } });
+      return;
     }
 
     const newContact = {
-
-        name , 
-        email , 
-        phone 
+      name,
+      email,
+      phone,
     };
 
-    axios.post(`https://jsonplaceholder.typicode.com/users` , newContact)
-    .then(res => {
-      // dispatch after doing stuff
-      dispatch({
-        type: 'ADD_CONTACT' , 
-        payload: res.data
+    axios
+      .post(`https://jsonplaceholder.typicode.com/users`, newContact)
+      .then((res) => {
+        // dispatch after doing stuff
+        dispatch({
+          type: "ADD_CONTACT",
+          payload: res.data,
+        });
       });
-    });
 
     // empty: input
     this.setState({
-        name: '' , 
-        email: '' , 
-        phone: '' , 
-        errors: {
-
-        }
+      name: "",
+      email: "",
+      phone: "",
+      errors: {},
     });
 
     // redirect to home page
-    this.props.history.push('/');
+    this.props.history.push("/");
   };
 
   onChange = (e) => {
@@ -68,7 +64,7 @@ class AddContact extends Component {
   };
 
   render() {
-    const { name, email, phone , errors } = this.state;
+    const { name, email, phone, errors } = this.state;
     return (
       <Consumer>
         {(value) => {
@@ -77,34 +73,32 @@ class AddContact extends Component {
             <div className="card mb-3">
               <div className="card-header">Add contact</div>
               <div className="card-body">
-
-                
-                <form onSubmit={this.onFormSubmit.bind(this , dispatch)}>
-                <TextInputGroup 
+                <form onSubmit={this.onFormSubmit.bind(this, dispatch)}>
+                  <TextInputGroup
                     label="Name"
                     name="name"
-                    placeholder="Enter name ..."  
-                    value={name} 
+                    placeholder="Enter name ..."
+                    value={name}
                     onChange={this.onChange}
                     error={errors.name}
-                />
-                <TextInputGroup 
+                  />
+                  <TextInputGroup
                     label="Email"
                     name="email"
                     type="email"
-                    placeholder="Enter Email ..." 
-                    value={email} 
+                    placeholder="Enter Email ..."
+                    value={email}
                     onChange={this.onChange}
                     error={errors.email}
-                />
-                <TextInputGroup 
+                  />
+                  <TextInputGroup
                     label="Phone"
                     name="phone"
-                    placeholder="Enter phone ..." 
-                    value={phone} 
+                    placeholder="Enter phone ..."
+                    value={phone}
                     onChange={this.onChange}
                     error={errors.phone}
-                />
+                  />
                   <input
                     type="submit"
                     value="Add Contact"

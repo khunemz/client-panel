@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Consumer } from "../../context";
-import axios from 'axios';
+import axios from "axios";
 
 class Contact extends Component {
   state = {
@@ -14,20 +14,21 @@ class Contact extends Component {
     });
   };
 
-  onDeleteClick = ( id , dispatch) => {
-    // this.props.deleteClickHander();
+  onDeleteClick = async (id, dispatch) => {
+    try {
+      // this.props.deleteClickHander();
+      await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`);
 
-    axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`)
-    .then(res => {
-      
-
-      // dispatch after doing stuff
       dispatch({
-        type: 'DELETE_CONTACT' , 
-        payload: id
+        type: "DELETE_CONTACT",
+        payload: id,
       });
-    });
-   
+    } catch (e) {
+      dispatch({
+        type: "DELETE_CONTACT",
+        payload: id,
+      });
+    }
   };
 
   render() {
@@ -49,7 +50,7 @@ class Contact extends Component {
                 <i
                   style={{ cursor: "pointer", float: "right", color: "red" }}
                   className="fas fa-times"
-                  onClick={this.onDeleteClick.bind(this,contact.id , dispatch)}
+                  onClick={this.onDeleteClick.bind(this, contact.id, dispatch)}
                 ></i>
               </h6>
 
